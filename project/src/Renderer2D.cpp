@@ -340,7 +340,7 @@ std::pair<WGPUSurfaceTexture, WGPUTextureView> wgpu::Renderer2D::GetNextSurfaceV
 
 	WGPUTextureViewDescriptor viewDescriptor;
 	viewDescriptor.nextInChain = nullptr;
-	viewDescriptor.label = WGPUStringView("Surface texture view");
+	viewDescriptor.label = WGPUStringView("Surface texture view", 21);
 	viewDescriptor.format = wgpuTextureGetFormat(surfaceTexture.texture);
 	viewDescriptor.dimension = WGPUTextureViewDimension_2D;
 	viewDescriptor.baseMipLevel = 0;

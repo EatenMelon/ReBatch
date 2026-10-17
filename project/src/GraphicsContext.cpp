@@ -120,11 +120,11 @@ bool wgpu::GraphicsContext::RequestDevice()
 	WGPUDeviceDescriptor desc{};
 
 	desc.nextInChain = nullptr;
-	desc.label = WGPUStringView("My Device");	// anything works here, that's your call
-	desc.requiredFeatureCount = 0;				// I don't require any specific feature
-	desc.requiredLimits = nullptr;				// I don't require any specific limit
+	desc.label = WGPUStringView("My Device", 10);	// anything works here, that's your call
+	desc.requiredFeatureCount = 0;					// I don't require any specific feature
+	desc.requiredLimits = nullptr;					// I don't require any specific limit
 	desc.defaultQueue.nextInChain = nullptr;
-	desc.defaultQueue.label = WGPUStringView("The default queue");
+	desc.defaultQueue.label = WGPUStringView("The default queue", 18);
 	desc.deviceLostCallbackInfo.callback = nullptr;
 
 	// TODO

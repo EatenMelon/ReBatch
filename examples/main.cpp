@@ -149,8 +149,8 @@ int main()
 	std::vector<glm::vec3> starPositions(numStars);
 	for (auto& pos : starPositions)
 	{
-		pos.x = getRandomFloat(-0.5f, 0.5f);
-		pos.y = getRandomFloat(-0.5f, 0.5f);
+		pos.x = getRandomFloat(-1.f, 1.f);
+		pos.y = getRandomFloat(-1.f, 1.f);
 		pos.z = getRandomFloat(-1.f, 1.f);
 	}
 
