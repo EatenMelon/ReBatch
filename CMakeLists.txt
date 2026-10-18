@@ -115,19 +115,23 @@ function(${PROJECT_NAME}_Copy_Dependencies TARGET)
 
 endfunction()
 
-add_executable(example "examples/main.cpp")
+if (PROJECT_IS_TOP_LEVEL)
 
-target_link_libraries(example PRIVATE 
-	Renderer2D::Renderer2D
-	SDL3::SDL3
-)
+	add_executable(example "examples/main.cpp")
 
-Renderer2D_Copy_Dependencies(example)
+	target_link_libraries(example PRIVATE 
+		Renderer2D::Renderer2D
+		SDL3::SDL3
+	)
 
-# copy resources
-add_custom_command(
-	TARGET example POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
-	"${CMAKE_SOURCE_DIR}/resources"
-	"$<TARGET_FILE_DIR:example>/resources"
-)
+	Renderer2D_Copy_Dependencies(example)
+
+	# copy resources
+	add_custom_command(
+		TARGET example POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+		"${CMAKE_SOURCE_DIR}/resources"
+		"$<TARGET_FILE_DIR:example>/resources"
+	)
+
+endif ()
