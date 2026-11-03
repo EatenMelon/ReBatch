@@ -10,7 +10,7 @@
 
 struct SDL_Window;
 
-namespace wgpu
+namespace rebatch
 {
 	class RenderQueue;
 	class GraphicsContext;

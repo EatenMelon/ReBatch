@@ -7,7 +7,7 @@
 #include "Pipeline.h"
 #include "Uniforms.h"
 
-namespace wgpu
+namespace rebatch
 {
 	class Texture2D;
 	class Sampler;

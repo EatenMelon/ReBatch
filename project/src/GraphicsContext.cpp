@@ -6,7 +6,7 @@
 #include <sdl3webgpu.h>
 #include <glm/glm.hpp>
 
-wgpu::GraphicsContext::GraphicsContext(SDL_Window* window)
+rebatch::GraphicsContext::GraphicsContext(SDL_Window* window)
 	: m_Window{ window }
 {
 	if (!CreateInstance())
@@ -35,7 +35,7 @@ wgpu::GraphicsContext::GraphicsContext(SDL_Window* window)
 	}
 }
 
-wgpu::GraphicsContext::~GraphicsContext()
+rebatch::GraphicsContext::~GraphicsContext()
 {
 	m_Window = nullptr;
 
@@ -54,22 +54,22 @@ wgpu::GraphicsContext::~GraphicsContext()
 	m_Instance = nullptr;
 }
 
-void wgpu::GraphicsContext::UpdateWindowFlags()
+void rebatch::GraphicsContext::UpdateWindowFlags()
 {
 	m_WindowFlags = SDL_GetWindowFlags(m_Window);
 }
 
-bool wgpu::GraphicsContext::IsWindowMinimized() const
+bool rebatch::GraphicsContext::IsWindowMinimized() const
 {
 	return m_WindowFlags & SDL_WINDOW_MINIMIZED;
 }
 
-float wgpu::GraphicsContext::GetAspectRatio() const
+float rebatch::GraphicsContext::GetAspectRatio() const
 {
 	return m_WindowSize.x / m_WindowSize.y;
 }
 
-bool wgpu::GraphicsContext::CreateInstance()
+bool rebatch::GraphicsContext::CreateInstance()
 {
 	WGPUInstanceDescriptor desc{};
 	desc.nextInChain = nullptr;
@@ -79,7 +79,7 @@ bool wgpu::GraphicsContext::CreateInstance()
 	return m_Instance != nullptr;
 }
 
-bool wgpu::GraphicsContext::RequestAdapter()
+bool rebatch::GraphicsContext::RequestAdapter()
 {
 	WGPURequestAdapterOptions options = {};
 	options.nextInChain = nullptr;
@@ -115,7 +115,7 @@ bool wgpu::GraphicsContext::RequestAdapter()
 	return m_Adapter != nullptr;
 }
 
-bool wgpu::GraphicsContext::RequestDevice()
+bool rebatch::GraphicsContext::RequestDevice()
 {
 	WGPUDeviceDescriptor desc{};
 
@@ -161,14 +161,14 @@ bool wgpu::GraphicsContext::RequestDevice()
 	return m_Device != nullptr;
 }
 
-bool wgpu::GraphicsContext::RequestQueue()
+bool rebatch::GraphicsContext::RequestQueue()
 {
 	m_Queue = wgpuDeviceGetQueue(m_Device);
 
 	return m_Queue != nullptr;
 }
 
-bool wgpu::GraphicsContext::InitSurface()
+bool rebatch::GraphicsContext::InitSurface()
 {
 	m_Surface = SDL_GetWGPUSurface(m_Instance, m_Window);
 
@@ -223,7 +223,7 @@ bool wgpu::GraphicsContext::InitSurface()
 	return true;
 }
 
-void wgpu::GraphicsContext::DestroySurface()
+void rebatch::GraphicsContext::DestroySurface()
 {
 	wgpuSurfaceRelease(m_Surface);
 	m_Surface = nullptr;

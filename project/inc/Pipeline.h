@@ -4,7 +4,7 @@
 #include "Shader.h"
 #include "BindGroupLayout.h"
 
-namespace wgpu
+namespace rebatch
 {
 	class Pipeline final
 	{

@@ -3,7 +3,7 @@
 
 #include <webgpu/webgpu.h>
 
-namespace wgpu
+namespace rebatch
 {
 	class Renderer2D;
 	class GraphicsContext;

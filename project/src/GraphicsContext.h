@@ -7,7 +7,7 @@
 
 struct SDL_Window;
 
-namespace wgpu
+namespace rebatch
 {
 	class GraphicsContext final
 	{

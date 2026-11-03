@@ -2,11 +2,11 @@
 #include <Renderer2D.h>
 #include "GraphicsContext.h"
 
-wgpu::Sampler::Sampler(const Renderer2D& renderer, Preset preset)
+rebatch::Sampler::Sampler(const Renderer2D& renderer, Preset preset)
 	: Sampler(renderer, GetSettings(preset))
 {}
 
-wgpu::Sampler::Sampler(const Renderer2D& renderer, AddressMode u, AddressMode v, FilterMode mag, FilterMode min)
+rebatch::Sampler::Sampler(const Renderer2D& renderer, AddressMode u, AddressMode v, FilterMode mag, FilterMode min)
 	: m_Context{ renderer.GetContext()}
 {
 	WGPUSamplerDescriptor samplerDesc{};
@@ -28,16 +28,16 @@ wgpu::Sampler::Sampler(const Renderer2D& renderer, AddressMode u, AddressMode v,
 	m_Sampler = wgpuDeviceCreateSampler(m_Context->GetDevice(), &samplerDesc);
 }
 
-wgpu::Sampler::~Sampler() noexcept
+rebatch::Sampler::~Sampler() noexcept
 {
 	wgpuSamplerRelease(m_Sampler);
 }
 
-wgpu::Sampler::Sampler(const Renderer2D& renderer, SamplerSettings settings)
+rebatch::Sampler::Sampler(const Renderer2D& renderer, SamplerSettings settings)
 	: Sampler(renderer, settings.addressModeU, settings.addressModeV, settings.magFilter, settings.minFilter)
 {}
 
-wgpu::Sampler::SamplerSettings wgpu::Sampler::GetSettings(Preset preset)
+rebatch::Sampler::SamplerSettings rebatch::Sampler::GetSettings(Preset preset)
 {
 	SamplerSettings settings{};
 
@@ -46,7 +46,7 @@ wgpu::Sampler::SamplerSettings wgpu::Sampler::GetSettings(Preset preset)
 
 	switch (preset)
 	{
-	case wgpu::Sampler::Preset::Nearest:
+	case rebatch::Sampler::Preset::Nearest:
 		settings.magFilter = FilterMode::Nearest;
 		settings.minFilter = FilterMode::Nearest;
 		break;
@@ -60,21 +60,21 @@ wgpu::Sampler::SamplerSettings wgpu::Sampler::GetSettings(Preset preset)
 	return settings;
 }
 
-WGPUAddressMode wgpu::Sampler::GetWGPUAddressMode(AddressMode mode)
+WGPUAddressMode rebatch::Sampler::GetWGPUAddressMode(AddressMode mode)
 {
 	switch (mode)
 	{
-	case wgpu::AddressMode::MirrorRepeat:	return WGPUAddressMode_MirrorRepeat;
-	case wgpu::AddressMode::Clamp:			return WGPUAddressMode_ClampToEdge;
+	case rebatch::AddressMode::MirrorRepeat:	return WGPUAddressMode_MirrorRepeat;
+	case rebatch::AddressMode::Clamp:			return WGPUAddressMode_ClampToEdge;
 	default:								return WGPUAddressMode_Repeat;
 	}
 }
 
-WGPUFilterMode wgpu::Sampler::GetFilterMode(FilterMode mode)
+WGPUFilterMode rebatch::Sampler::GetFilterMode(FilterMode mode)
 {
 	switch (mode)
 	{
-	case wgpu::FilterMode::Linear:	return WGPUFilterMode_Linear;
+	case rebatch::FilterMode::Linear:	return WGPUFilterMode_Linear;
 	default:						return WGPUFilterMode_Nearest;
 	}
 }

@@ -5,7 +5,7 @@
 
 #include "GraphicsContext.h"
 
-wgpu::Shader::Shader(const Renderer2D& renderer, const std::string& shader, ParsingMethod method)
+rebatch::Shader::Shader(const Renderer2D& renderer, const std::string& shader, ParsingMethod method)
     : m_Renderer{ &renderer }
 {
 
@@ -31,12 +31,12 @@ wgpu::Shader::Shader(const Renderer2D& renderer, const std::string& shader, Pars
     LoadShaderFromSource(shaderSource);
 }
 
-wgpu::Shader::~Shader() noexcept
+rebatch::Shader::~Shader() noexcept
 {
     wgpuShaderModuleRelease(m_ShaderModule);
 }
 
-void wgpu::Shader::LoadShaderFromSource(const std::string& shaderSource)
+void rebatch::Shader::LoadShaderFromSource(const std::string& shaderSource)
 {
     WGPUShaderSourceWGSL shaderCodeDesc{};
     shaderCodeDesc.chain.next = nullptr;

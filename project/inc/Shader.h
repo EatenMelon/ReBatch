@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <wgpu.h>
 
-namespace wgpu
+namespace rebatch
 {
 	class Renderer2D;
 

@@ -3,7 +3,7 @@
 #include <limits>
 #include <glm/ext.hpp>
 
-void wgpu::Camera2D::SetAspectRatio(float aspectRatio)
+void rebatch::Camera2D::SetAspectRatio(float aspectRatio)
 {
 	if (aspectRatio <= 0.f)
 	{
@@ -14,7 +14,7 @@ void wgpu::Camera2D::SetAspectRatio(float aspectRatio)
 	m_UpdateCameraData = true;
 }
 
-void wgpu::Camera2D::SetZoom(float zoom)
+void rebatch::Camera2D::SetZoom(float zoom)
 {
 	m_Zoom = zoom;
 	m_UpdateCameraData = true;
@@ -26,24 +26,24 @@ void wgpu::Camera2D::SetZoom(float zoom)
 
 }
 
-void wgpu::Camera2D::Zoom(float deltaZoom)
+void rebatch::Camera2D::Zoom(float deltaZoom)
 {
 	SetZoom(m_Zoom + deltaZoom);
 }
 
-void wgpu::Camera2D::Focus(const glm::vec2& focalPoint)
+void rebatch::Camera2D::Focus(const glm::vec2& focalPoint)
 {
 	m_FocalPoint = focalPoint;
 	m_UpdateCameraData = true;
 }
 
-void wgpu::Camera2D::Move(const glm::vec2& deltaPos)
+void rebatch::Camera2D::Move(const glm::vec2& deltaPos)
 {
 	m_FocalPoint += deltaPos;
 	m_UpdateCameraData = true;
 }
 
-const wgpu::CameraData& wgpu::Camera2D::GetCameraData()
+const rebatch::CameraData& rebatch::Camera2D::GetCameraData()
 {
 	if (!m_UpdateCameraData) return m_Data;
 

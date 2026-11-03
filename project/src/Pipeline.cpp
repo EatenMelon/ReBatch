@@ -26,7 +26,7 @@ static void SetDefault(WGPUDepthStencilState& depthStencilState)
 	SetDefault(depthStencilState.stencilBack);
 }
 
-wgpu::Pipeline::Pipeline(const Shader& shader, Type pipelineType, const BindGroupLayout* bindGroupLayout)
+rebatch::Pipeline::Pipeline(const Shader& shader, Type pipelineType, const BindGroupLayout* bindGroupLayout)
 	: m_Shader{ &shader }
 	, m_BindGroupLayout{ bindGroupLayout }
 	, m_Type{ pipelineType }
@@ -180,12 +180,12 @@ wgpu::Pipeline::Pipeline(const Shader& shader, Type pipelineType, const BindGrou
 	m_Pipeline = wgpuDeviceCreateRenderPipeline(device, &desc);
 }
 
-wgpu::Pipeline::~Pipeline() noexcept
+rebatch::Pipeline::~Pipeline() noexcept
 {
 	wgpuRenderPipelineRelease(m_Pipeline);
 }
 
-const wgpu::GraphicsContext* wgpu::Pipeline::GetContext() const
+const rebatch::GraphicsContext* rebatch::Pipeline::GetContext() const
 {
 	return m_Shader->GetRenderer()->GetContext();
 }

@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.21)
 
-project(Renderer2D)
+project(ReBatch)
 
 # C++ config
 set(CMAKE_CXX_STANDARD 20)
@@ -120,11 +120,11 @@ if (PROJECT_IS_TOP_LEVEL)
 	add_executable(example "examples/main.cpp")
 
 	target_link_libraries(example PRIVATE 
-		Renderer2D::Renderer2D
+		ReBatch::ReBatch
 		SDL3::SDL3
 	)
 
-	Renderer2D_Copy_Dependencies(example)
+	ReBatch_Copy_Dependencies(example)
 
 	# copy resources
 	add_custom_command(

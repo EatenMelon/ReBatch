@@ -5,7 +5,7 @@
 #include "Renderer2D.h"
 #include "Material.h"
 
-wgpu::Texture2D::Texture2D(const Renderer2D& renderer, const std::filesystem::path& path)
+rebatch::Texture2D::Texture2D(const Renderer2D& renderer, const std::filesystem::path& path)
 	: m_Renderer{ &renderer }
 {
 	auto pathStr{ path.string() };
@@ -70,19 +70,19 @@ wgpu::Texture2D::Texture2D(const Renderer2D& renderer, const std::filesystem::pa
 	SDL_DestroySurface(surface);
 }
 
-wgpu::Texture2D::~Texture2D() noexcept
+rebatch::Texture2D::~Texture2D() noexcept
 {
 	wgpuTextureViewRelease(m_TextureView);
 	wgpuTextureDestroy(m_Texture);
 	wgpuTextureRelease(m_Texture);
 }
 
-void wgpu::Texture2D::SetColorMultiplier(const ColorF& color)
+void rebatch::Texture2D::SetColorMultiplier(const ColorF& color)
 {
 	m_ColorMultiplier = color;
 }
 
-wgpu::RectF wgpu::Texture2D::GetCutout(const RectF& src) const
+rebatch::RectF rebatch::Texture2D::GetCutout(const RectF& src) const
 {
 	return RectF
 	{
@@ -93,12 +93,12 @@ wgpu::RectF wgpu::Texture2D::GetCutout(const RectF& src) const
 	};
 }
 
-glm::vec2 wgpu::Texture2D::GetSize() const
+glm::vec2 rebatch::Texture2D::GetSize() const
 {
 	return m_Size;
 }
 
-wgpu::ColorF wgpu::Texture2D::GetColorMultiplier() const
+rebatch::ColorF rebatch::Texture2D::GetColorMultiplier() const
 {
 	return m_ColorMultiplier;
 }

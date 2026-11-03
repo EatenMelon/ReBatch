@@ -9,12 +9,12 @@
 #include "GraphicsContext.h"
 #include "Helper.h"
 
-void wgpu::BindGroupLayout::SetUniformCount(size_t count)
+void rebatch::BindGroupLayout::SetUniformCount(size_t count)
 {
 	m_UniformEntries.resize(count);
 }
 
-bool wgpu::BindGroupLayout::AddTextureEntry(int binding)
+bool rebatch::BindGroupLayout::AddTextureEntry(int binding)
 {
 	if (IsLocked()) return false;
 
@@ -34,7 +34,7 @@ bool wgpu::BindGroupLayout::AddTextureEntry(int binding)
 	return true;
 }
 
-bool wgpu::BindGroupLayout::AddSamplerEntry(int binding)
+bool rebatch::BindGroupLayout::AddSamplerEntry(int binding)
 {
 	if (IsLocked()) return false;
 
@@ -53,7 +53,7 @@ bool wgpu::BindGroupLayout::AddSamplerEntry(int binding)
 	return true;
 }
 
-bool wgpu::BindGroupLayout::AddFrameEntry(int binding)
+bool rebatch::BindGroupLayout::AddFrameEntry(int binding)
 {
 	if (IsLocked()) return false;
 
@@ -73,14 +73,14 @@ bool wgpu::BindGroupLayout::AddFrameEntry(int binding)
 	return true;
 }
 
-int wgpu::BindGroupLayout::GetFrameEntryBinding() const
+int rebatch::BindGroupLayout::GetFrameEntryBinding() const
 {
 	if (m_FrameEntry == nullptr) return -1;
 
 	return m_FrameEntry->binding;
 }
 
-void wgpu::BindGroupLayout::ConfirmLayout(const Renderer2D& renderer)
+void rebatch::BindGroupLayout::ConfirmLayout(const Renderer2D& renderer)
 {
 	m_Context = renderer.GetContext();
 
@@ -131,19 +131,19 @@ void wgpu::BindGroupLayout::ConfirmLayout(const Renderer2D& renderer)
 	m_BindGroupLayout = wgpuDeviceCreateBindGroupLayout(m_Context->GetDevice(), &desc);
 }
 
-int wgpu::BindGroupLayout::GetUniformEntryBinding() const
+int rebatch::BindGroupLayout::GetUniformEntryBinding() const
 {
 	if (m_UniformEntries.size() <= 0) return -1;
 
 	return m_UniformBinding;
 }
 
-size_t wgpu::BindGroupLayout::GetUniformCount() const
+size_t rebatch::BindGroupLayout::GetUniformCount() const
 {
 	return m_UniformEntries.size();
 }
 
-uint64_t wgpu::BindGroupLayout::GetUniformSize(size_t location) const
+uint64_t rebatch::BindGroupLayout::GetUniformSize(size_t location) const
 {
 	if (location >= m_UniformEntries.size()) return 0;
 
@@ -151,7 +151,7 @@ uint64_t wgpu::BindGroupLayout::GetUniformSize(size_t location) const
 
 }
 
-uint64_t wgpu::BindGroupLayout::GetRequiredUniformBufferSize() const
+uint64_t rebatch::BindGroupLayout::GetRequiredUniformBufferSize() const
 {
 	return m_UniformBufferSize;
 }

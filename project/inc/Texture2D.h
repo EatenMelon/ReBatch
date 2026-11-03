@@ -8,7 +8,7 @@
 #include "DataTypes.h"
 #include "Sampler.h"
 
-namespace wgpu
+namespace rebatch
 {
 	class Renderer2D;
 	class GraphicsContext;

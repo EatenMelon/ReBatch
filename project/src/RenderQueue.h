@@ -6,7 +6,7 @@
 #include <DataTypes.h>
 #include <wgpu.h>
 
-namespace wgpu
+namespace rebatch
 {
 	class Material;
 	class Renderer2D;

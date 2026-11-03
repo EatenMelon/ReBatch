@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace wgpu
+namespace rebatch
 {
 	struct ColorF
 	{

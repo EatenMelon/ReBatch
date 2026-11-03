@@ -14,9 +14,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-static void LoadQuad(wgpu::Mesh3D& mesh, const glm::vec3& position, const wgpu::ColorF& color)
+static void LoadQuad(rebatch::Mesh3D& mesh, const glm::vec3& position, const rebatch::ColorF& color)
 {
-	mesh.vertices.resize(4, wgpu::Vertex3D{});
+	mesh.vertices.resize(4, rebatch::Vertex3D{});
 
 	mesh.vertices[0].position = glm::vec3(-0.25f, 0.25f, 0.f) + position;
 	mesh.vertices[0].color = color;
@@ -37,9 +37,9 @@ static void LoadQuad(wgpu::Mesh3D& mesh, const glm::vec3& position, const wgpu::
 	mesh.indices = { 0, 1, 2, 0, 2, 3 };
 }
 
-static void LoadStar(wgpu::Mesh3D& mesh, const glm::vec3& position, const wgpu::ColorF& color, float scale = 1.f)
+static void LoadStar(rebatch::Mesh3D& mesh, const glm::vec3& position, const rebatch::ColorF& color, float scale = 1.f)
 {
-	mesh.vertices.resize(8, wgpu::Vertex3D{});
+	mesh.vertices.resize(8, rebatch::Vertex3D{});
 
 	glm::mat4 transform(1.f);
 	transform = glm::translate(transform, position);
@@ -111,26 +111,26 @@ int main()
 	glm::ivec2 size{ 800, 600 };
 	SDL_Window* window = SDL_CreateWindow("Welcome back, WebGPU", size.x, size.y, SDL_WINDOW_RESIZABLE);
 
-	wgpu::Renderer2D renderer{ window };
+	rebatch::Renderer2D renderer{ window };
 	
 	// render resources
-	wgpu::Camera2D camera{};
+	rebatch::Camera2D camera{};
 	camera.SetAspectRatio(static_cast<float>(size.x) / size.y);
 
-	wgpu::BindGroupLayout layout{};
+	rebatch::BindGroupLayout layout{};
 	layout.SetUniformCount(2);
-	layout.AddUniformVariable<wgpu::CameraData>(0);
-	layout.AddUniformVariable<wgpu::ColorF>(1);
+	layout.AddUniformVariable<rebatch::CameraData>(0);
+	layout.AddUniformVariable<rebatch::ColorF>(1);
 	layout.ConfirmLayout(renderer);
 
-	wgpu::Shader shader{ renderer, "resources/SolidColor.wgsl" };
-	wgpu::Pipeline pipeline{ shader, wgpu::Pipeline::Type::GeometryTransparent, &layout };
-	wgpu::Material material{ pipeline };
+	rebatch::Shader shader{ renderer, "resources/SolidColor.wgsl" };
+	rebatch::Pipeline pipeline{ shader, rebatch::Pipeline::Type::GeometryTransparent, &layout };
+	rebatch::Material material{ pipeline };
 
-	material.SetUniformVariable<wgpu::ColorF>(1, wgpu::ColorF{ 1.f, 1.f, 1.f, 0.5f });
-	material.SetUniformVariable<wgpu::CameraData>(0, camera.GetCameraData());
+	material.SetUniformVariable<rebatch::ColorF>(1, rebatch::ColorF{ 1.f, 1.f, 1.f, 0.5f });
+	material.SetUniformVariable<rebatch::CameraData>(0, camera.GetCameraData());
 
-	wgpu::Mesh3D mesh{};
+	rebatch::Mesh3D mesh{};
 
 	constexpr auto getRandomFloat = [](float min, float max) -> float
 		{
@@ -154,7 +154,7 @@ int main()
 		pos.z = getRandomFloat(-1.f, 1.f);
 	}
 
-	std::vector<wgpu::ColorF> starColors(numStars);
+	std::vector<rebatch::ColorF> starColors(numStars);
 	for (auto& color : starColors)
 	{
 		color.r = getRandomFloat(0.1f, 1.f);
@@ -192,7 +192,7 @@ int main()
 
 			if (updateMaterials)
 			{
-				material.SetUniformVariable<wgpu::CameraData>(0, camera.GetCameraData());
+				material.SetUniformVariable<rebatch::CameraData>(0, camera.GetCameraData());
 			}
 		}
 		

@@ -10,7 +10,7 @@
 #include <backends/imgui_impl_wgpu.h>
 #include <backends/imgui_impl_sdl3.h>
 
-wgpu::Renderer2D::Renderer2D(SDL_Window* window)
+rebatch::Renderer2D::Renderer2D(SDL_Window* window)
 	: m_RenderQueue{ std::make_unique<RenderQueue>() }
 	, m_Context{ std::make_unique<GraphicsContext>(window) }
 {
@@ -22,7 +22,7 @@ wgpu::Renderer2D::Renderer2D(SDL_Window* window)
 	ImGuiInit();
 }
 
-wgpu::Renderer2D::~Renderer2D() noexcept
+rebatch::Renderer2D::~Renderer2D() noexcept
 {
 	ImGuiQuit();
 	wgpuBufferRelease(m_Vertex.buffer);
@@ -36,19 +36,19 @@ wgpu::Renderer2D::~Renderer2D() noexcept
 	DestroyPostProcessingData();
 }
 
-void wgpu::Renderer2D::BatchMesh(Material* material, const Mesh3D& mesh) const
+void rebatch::Renderer2D::BatchMesh(Material* material, const Mesh3D& mesh) const
 {
 	m_RenderQueue->SubmitMesh(material, mesh);
 }
 
-void wgpu::Renderer2D::SubmitPostProcessingEffect(Material* material)
+void rebatch::Renderer2D::SubmitPostProcessingEffect(Material* material)
 {
 	if (material == nullptr) return;
 
 	m_PostEffects.push_back(material);
 }
 
-void wgpu::Renderer2D::BeginFrame()
+void rebatch::Renderer2D::BeginFrame()
 {
 	m_Context->UpdateWindowFlags();
 
@@ -72,7 +72,7 @@ void wgpu::Renderer2D::BeginFrame()
 	wgpuCommandEncoderRelease(encoder);
 }
 
-void wgpu::Renderer2D::EndFrame()
+void rebatch::Renderer2D::EndFrame()
 {
 	if (m_Context->IsWindowMinimized()) return;
 
@@ -91,19 +91,19 @@ void wgpu::Renderer2D::EndFrame()
 	m_PostEffects.clear();
 }
 
-void wgpu::Renderer2D::GuiBeginFrame()
+void rebatch::Renderer2D::GuiBeginFrame()
 {
 	ImGui_ImplWGPU_NewFrame();
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 }
 
-void wgpu::Renderer2D::GuiEndFrame()
+void rebatch::Renderer2D::GuiEndFrame()
 {
 	ImGui::EndFrame();
 }
 
-void wgpu::Renderer2D::Render() const
+void rebatch::Renderer2D::Render() const
 {
 	if (m_Context->IsWindowMinimized()) return;
 	
@@ -176,12 +176,12 @@ void wgpu::Renderer2D::Render() const
 	wgpuTextureViewRelease(targetView);
 }
 
-void wgpu::Renderer2D::SetClearColor(const ColorF& color)
+void rebatch::Renderer2D::SetClearColor(const ColorF& color)
 {
 	m_ClearColor = color;
 }
 
-void wgpu::Renderer2D::Resize()
+void rebatch::Renderer2D::Resize()
 {
 	m_Context->DestroySurface();
 	ReleaseDepthBuffer();
@@ -193,7 +193,7 @@ void wgpu::Renderer2D::Resize()
 	InitPostProcessingData();
 }
 
-void wgpu::Renderer2D::ImGuiInit()
+void rebatch::Renderer2D::ImGuiInit()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -210,13 +210,13 @@ void wgpu::Renderer2D::ImGuiInit()
 	ImGui_ImplWGPU_Init(&info);
 }
 
-void wgpu::Renderer2D::ImGuiQuit()
+void rebatch::Renderer2D::ImGuiQuit()
 {
 	ImGui_ImplSDL3_Shutdown();
 	ImGui_ImplWGPU_Shutdown();
 }
 
-void wgpu::Renderer2D::InitDepthBuffer()
+void rebatch::Renderer2D::InitDepthBuffer()
 {
 	WGPUTextureFormat depthTextureFormat = WGPUTextureFormat_Depth24Plus;
 
@@ -246,14 +246,14 @@ void wgpu::Renderer2D::InitDepthBuffer()
 	m_DepthTextureView = wgpuTextureCreateView(m_DepthTexture, &viewDesc);
 }
 
-void wgpu::Renderer2D::ReleaseDepthBuffer()
+void rebatch::Renderer2D::ReleaseDepthBuffer()
 {
 	wgpuTextureViewRelease(m_DepthTextureView);
 	wgpuTextureDestroy(m_DepthTexture);
 	wgpuTextureRelease(m_DepthTexture);
 }
 
-void wgpu::Renderer2D::InitPostProcessingData()
+void rebatch::Renderer2D::InitPostProcessingData()
 {
 	const auto windowSize = m_Context->GetWindowSize();
 
@@ -286,7 +286,7 @@ void wgpu::Renderer2D::InitPostProcessingData()
 	m_PPData.pongView = wgpuTextureCreateView(m_PPData.pongTexture, &viewDesc);
 }
 
-void wgpu::Renderer2D::DestroyPostProcessingData()
+void rebatch::Renderer2D::DestroyPostProcessingData()
 {
 	wgpuTextureRelease(m_PPData.pingTexture);
 	wgpuTextureRelease(m_PPData.pongTexture);
@@ -294,7 +294,7 @@ void wgpu::Renderer2D::DestroyPostProcessingData()
 	wgpuTextureViewRelease(m_PPData.pongView);
 }
 
-void wgpu::Renderer2D::CreateVertexBuffer(size_t capacity)
+void rebatch::Renderer2D::CreateVertexBuffer(size_t capacity)
 {
 	WGPUBufferDescriptor desc{};
 	desc.size = capacity;
@@ -310,7 +310,7 @@ void wgpu::Renderer2D::CreateVertexBuffer(size_t capacity)
 	m_Vertex.capacity = capacity;
 }
 
-void wgpu::Renderer2D::CreateIndexBuffer(size_t capacity)
+void rebatch::Renderer2D::CreateIndexBuffer(size_t capacity)
 {
 	WGPUBufferDescriptor desc{};
 	desc.size = capacity;
@@ -326,7 +326,7 @@ void wgpu::Renderer2D::CreateIndexBuffer(size_t capacity)
 	m_Index.capacity = capacity;
 }
 
-std::pair<WGPUSurfaceTexture, WGPUTextureView> wgpu::Renderer2D::GetNextSurfaceViewData() const
+std::pair<WGPUSurfaceTexture, WGPUTextureView> rebatch::Renderer2D::GetNextSurfaceViewData() const
 {
 	WGPUTextureView view{ nullptr };
 	WGPUSurfaceTexture surfaceTexture{};
@@ -355,7 +355,7 @@ std::pair<WGPUSurfaceTexture, WGPUTextureView> wgpu::Renderer2D::GetNextSurfaceV
 	return { surfaceTexture, view };
 }
 
-void wgpu::Renderer2D::RenderObjects(WGPUTextureView targetView, WGPUCommandEncoder encoder) const
+void rebatch::Renderer2D::RenderObjects(WGPUTextureView targetView, WGPUCommandEncoder encoder) const
 {
 	// describe render pass
 	WGPURenderPassDescriptor renderPassDesc{};
@@ -402,7 +402,7 @@ void wgpu::Renderer2D::RenderObjects(WGPUTextureView targetView, WGPUCommandEnco
 	wgpuRenderPassEncoderRelease(renderPass);
 }
 
-void wgpu::Renderer2D::RenderPostEffect(Material* effect, WGPUTextureView targetView, WGPUCommandEncoder encoder) const
+void rebatch::Renderer2D::RenderPostEffect(Material* effect, WGPUTextureView targetView, WGPUCommandEncoder encoder) const
 {
 	// describe render pass
 	WGPURenderPassDescriptor renderPassDesc{};
@@ -437,7 +437,7 @@ void wgpu::Renderer2D::RenderPostEffect(Material* effect, WGPUTextureView target
 	wgpuRenderPassEncoderRelease(renderPass);
 }
 
-void wgpu::Renderer2D::RenderGui(WGPUTextureView targetView, WGPUCommandEncoder encoder) const
+void rebatch::Renderer2D::RenderGui(WGPUTextureView targetView, WGPUCommandEncoder encoder) const
 {
 	if (ImGui::GetFrameCount() <= 0) return;
 

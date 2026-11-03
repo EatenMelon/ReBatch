@@ -3,7 +3,7 @@
 
 #include "DataTypes.h"
 
-namespace wgpu
+namespace rebatch
 {
 	// a simple example of a camera class that manages 
 	// a CameraData struct, which can be used as uniform for materials

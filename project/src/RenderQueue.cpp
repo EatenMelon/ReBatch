@@ -8,10 +8,10 @@
 
 #include "GraphicsContext.h"
 
-const size_t wgpu::RenderQueue::m_InitialBatchSize{ 512 };
+const size_t rebatch::RenderQueue::m_InitialBatchSize{ 512 };
 
 
-void wgpu::RenderQueue::SubmitMesh(Material* material, const Mesh3D& mesh)
+void rebatch::RenderQueue::SubmitMesh(Material* material, const Mesh3D& mesh)
 {
 	if (material == nullptr)
 	{
@@ -30,14 +30,14 @@ void wgpu::RenderQueue::SubmitMesh(Material* material, const Mesh3D& mesh)
 	m_Indices.insert(m_Indices.end(), mesh.indices.begin(), mesh.indices.end());
 }
 
-void wgpu::RenderQueue::Flush()
+void rebatch::RenderQueue::Flush()
 {
 	m_Batches.clear();
 	m_Verices.clear();
 	m_Indices.clear();
 }
 
-void wgpu::RenderQueue::Render(const Renderer2D& renderer, WGPUBuffer vertexBuffer, WGPUBuffer indexBuffer, WGPURenderPassEncoder renderPass)
+void rebatch::RenderQueue::Render(const Renderer2D& renderer, WGPUBuffer vertexBuffer, WGPUBuffer indexBuffer, WGPURenderPassEncoder renderPass)
 {
 	const auto context = renderer.GetContext();
 
@@ -85,12 +85,12 @@ void wgpu::RenderQueue::Render(const Renderer2D& renderer, WGPUBuffer vertexBuff
 	}
 }
 
-size_t wgpu::RenderQueue::GetVertexBufferSize() const
+size_t rebatch::RenderQueue::GetVertexBufferSize() const
 {
 	return m_Verices.size() * sizeof(Vertex3D);
 }
 
-size_t wgpu::RenderQueue::GetIndexBufferSize() const
+size_t rebatch::RenderQueue::GetIndexBufferSize() const
 {
 	return m_Indices.size() * sizeof(uint32_t);
 }

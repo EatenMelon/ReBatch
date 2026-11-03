@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-namespace wgpu
+namespace rebatch
 {
 	class IUniform
 	{

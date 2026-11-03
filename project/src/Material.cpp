@@ -5,7 +5,7 @@
 #include "GraphicsContext.h"
 #include "Helper.h"
 
-wgpu::Material::Material(const Pipeline& pipeline)
+rebatch::Material::Material(const Pipeline& pipeline)
 	: m_Pipeline{ &pipeline }
 {
 
@@ -26,7 +26,7 @@ wgpu::Material::Material(const Pipeline& pipeline)
     m_UniformBuffer = wgpuDeviceCreateBuffer(m_Pipeline->GetContext()->GetDevice(), &bufferDesc);
 }
 
-wgpu::Material::~Material() noexcept
+rebatch::Material::~Material() noexcept
 {
 	if (m_BindGroup != nullptr)
 	{
@@ -41,7 +41,7 @@ wgpu::Material::~Material() noexcept
 	}
 }
 
-bool wgpu::Material::SetTexture(int binding, const Texture2D* texture)
+bool rebatch::Material::SetTexture(int binding, const Texture2D* texture)
 {
 	if (texture == nullptr) return false;
 
@@ -51,7 +51,7 @@ bool wgpu::Material::SetTexture(int binding, const Texture2D* texture)
 	return true;
 }
 
-bool wgpu::Material::SetSampler(int binding, const Sampler* sampler)
+bool rebatch::Material::SetSampler(int binding, const Sampler* sampler)
 {
 	if (sampler == nullptr) return false;
 
@@ -61,7 +61,7 @@ bool wgpu::Material::SetSampler(int binding, const Sampler* sampler)
 	return true;
 }
 
-bool wgpu::Material::SetFrame(int binding, WGPUTextureView frameTextureView)
+bool rebatch::Material::SetFrame(int binding, WGPUTextureView frameTextureView)
 {
 	if (frameTextureView == nullptr) return false;
 
@@ -78,7 +78,7 @@ bool wgpu::Material::SetFrame(int binding, WGPUTextureView frameTextureView)
 	return true;
 }
 
-int wgpu::Material::GetUniformBinding() const
+int rebatch::Material::GetUniformBinding() const
 {
 	auto layout = m_Pipeline->GetBindGroupLayout();
 
@@ -90,7 +90,7 @@ int wgpu::Material::GetUniformBinding() const
 	return layout->GetUniformEntryBinding();
 }
 
-WGPUBindGroup wgpu::Material::GetBindGroup()
+WGPUBindGroup rebatch::Material::GetBindGroup()
 {
 	UpdateUniformBuffer();
 	UpdateBindgroup();
@@ -98,7 +98,7 @@ WGPUBindGroup wgpu::Material::GetBindGroup()
 	return m_BindGroup;
 }
 
-void wgpu::Material::UpdateUniformBuffer()
+void rebatch::Material::UpdateUniformBuffer()
 {
 	if (!m_UpdateUniformBuffer) return;
 	if (m_Uniform.empty()) return;
@@ -136,7 +136,7 @@ void wgpu::Material::UpdateUniformBuffer()
 	m_UpdateUniformBuffer = false;
 }
 
-void wgpu::Material::UpdateBindgroup()
+void rebatch::Material::UpdateBindgroup()
 {
 	if (!m_UpdateBindGroup) return;
 
